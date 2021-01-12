@@ -1,4 +1,5 @@
 import pygame
+from settings import Settings
 
 
 class Ship:
@@ -10,6 +11,7 @@ class Ship:
         """
         Инициализирует корабль и задает его начальную позицию.
         """
+        self.settings = Settings()
 
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
@@ -36,6 +38,6 @@ class Ship:
         Обнвление позиции корабля с учетом флага.
         """
         if self.moving_right:
-            self.rect.x += 1
+            self.rect.x += self.settings.ship_speed
         if self.moving_left:
-            self.rect.x -= 1
+            self.rect.x -= self.settings.ship_speed
