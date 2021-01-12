@@ -23,6 +23,9 @@ class Ship:
         # Каждый новый корабль появляется у нижнегоа края экрана.
         self.rect.midbottom = self.screen_rect.midbottom
 
+        # Сохранение вещественной координаты центра корабля.
+        self.x = float(self.rect.x)
+
         # Флаг перемещения
         self.moving_right = False
         self.moving_left = False
@@ -38,6 +41,9 @@ class Ship:
         Обнвление позиции корабля с учетом флага.
         """
         if self.moving_right:
-            self.rect.x += self.settings.ship_speed
+            self.x += self.settings.ship_speed
         if self.moving_left:
-            self.rect.x -= self.settings.ship_speed
+            self.x -= self.settings.ship_speed
+
+        # Обновление атрибута rect на основании self.x
+        self.rect.x = self.x
