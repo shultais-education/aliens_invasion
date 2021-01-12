@@ -58,6 +58,8 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+        elif event.key == pygame.K_q:
+            sys.exit()
 
     def _update_screen(self):
         """
@@ -68,7 +70,6 @@ class AlienInvasion:
 
         # Отображение последнего прорисованного экрана.
         pygame.display.flip()
-
 
 
 if __name__ == '__main__':
