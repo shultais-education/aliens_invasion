@@ -11,7 +11,7 @@ class Ship:
         """
         Инициализирует корабль и задает его начальную позицию.
         """
-        self.settings = Settings()
+        self.settings = ai_game.settings
 
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
