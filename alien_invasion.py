@@ -1,7 +1,9 @@
 import sys
 import pygame
+from time import sleep
 
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -21,6 +23,8 @@ class AlienInvasion:
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Инопланетное вторжение")
+
+        self.stats = GameStats(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -82,6 +86,12 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
+        """
+        Обработка коллизий снарядов с пришельцами.
+        """
         # Проверка попаданий в пришельцев.
         # При обнаружении попадания удалить снаряд и пришельца.
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
@@ -98,6 +108,10 @@ class AlienInvasion:
         """
         self._check_fleet_edges()
         self.aliens.update()
+
+        # Проверка коллизии пришелец-корабль
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            self._ship_hit()
 
     def _update_screen(self):
         """
@@ -133,7 +147,7 @@ class AlienInvasion:
 
         # Определяем количество рядов, которые помещаются на экране
         ship_height = self.ship.rect.height
-        available_space_y = (self.settings.screen_height - (5 * alien_height) - ship_height)
+        available_space_y = (self.settings.screen_height - (3 * alien_height) - ship_height)
         number_rows = available_space_y // (2 * alien_height)
 
         # Создание флота вторжения
@@ -168,6 +182,23 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
+
+    def _ship_hit(self):
+        """
+        Обрабатывает столкновение корабля с пришельцем.
+        """
+        self.stats.ships_left -= 1
+
+        # Очистка пришельцев и снарядов
+        self.aliens.empty()
+        self.bullets.empty()
+
+        # Создание нового флота и размещение корабля в центре.
+        self._create_fleet()
+        self.ship.center_ship()
+
+        # Пауза
+        sleep(0.5)
 
 
 if __name__ == '__main__':
