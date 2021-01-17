@@ -112,6 +112,8 @@ class AlienInvasion:
             # Уничтожение существующих снарядов и создание нового флота.
             self.bullets.empty()
             self._create_fleet()
+            # Увеличиваем скорость игры.
+            self.settings.inc_speed()
 
     def _update_aliens(self):
         """
@@ -239,6 +241,7 @@ class AlienInvasion:
         """
         # Сброс игровой статистики
         self.stats.reset_stats()
+        self.settings.init_dynamic_settings()
         self.stats.game_active = True
 
         # Очистка пришельцев и снарядов.
