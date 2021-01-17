@@ -9,6 +9,7 @@ class Settings:
         self.screen_height = 928
         self.bg_color = (230, 230, 230)
         self.speedup_scale = 1.1
+        self.score_scale = 1.5
 
         # Корабль
         self.ship_speed = 3
@@ -44,3 +45,5 @@ class Settings:
         self.ship_speed_factor *= self.speedup_scale
         self.bullet_speed_factor *= self.speedup_scale
         self.alien_speed_factor *= self.speedup_scale
+
+        self.alien_points = int(self.alien_points * self.score_scale)
