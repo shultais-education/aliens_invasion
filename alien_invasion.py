@@ -87,6 +87,8 @@ class AlienInvasion:
             self.ship.moving_left = False
         elif event.key in (pygame.K_q, pygame.K_ESCAPE):
             sys.exit()
+        elif event.key == pygame.K_p:
+            self._start_game()
 
     def _update_bullets(self):
         self.bullets.update()
@@ -231,27 +233,32 @@ class AlienInvasion:
             self.stats.game_active = False
             pygame.mouse.set_visible(False)
 
+    def _start_game(self):
+        """
+        Запуск игры.
+        """
+        # Сброс игровой статистики
+        self.stats.reset_stats()
+        self.stats.game_active = True
+
+        # Очистка пришельцев и снарядов.
+        self.aliens.empty()
+        self.bullets.empty()
+
+        # Создание нового флота и размещение корабля в центре
+        self._create_fleet()
+        self.ship.center_ship()
+
+        # Скрываем указатель мыши
+        pygame.mouse.set_visible(False)
+
     def _check_play_button(self, mouse_pos):
         """
         Запускает новую игру при нажатии на кнопку Play.
         """
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
-            # Сброс игровой статистики
-            self.stats.reset_stats()
-            self.stats.game_active = True
-
-            # Очистка пришельцев и снарядов.
-            self.aliens.empty()
-            self.bullets.empty()
-
-            # Создание нового флота и размещение корабля в центре
-            self._create_fleet()
-            self.ship.center_ship()
-
-            # Скрываем указатель мыши
-            pygame.mouse.set_visible(False)
-
+            self._start_game()
 
 
 if __name__ == '__main__':
