@@ -8,6 +8,7 @@ from ship import Ship
 from bullet import Bullet
 from alien import Alien
 from button import Button
+from scoreboard import Scoreboard
 
 
 class AlienInvasion:
@@ -26,6 +27,7 @@ class AlienInvasion:
         pygame.display.set_caption("Инопланетное вторжение")
 
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -138,7 +140,9 @@ class AlienInvasion:
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+
         self.aliens.draw(self.screen)
+        self.sb.show_score()
 
         # Показываем кнопку Play, если игра неактивна.
         if not self.stats.game_active:
