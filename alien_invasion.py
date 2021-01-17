@@ -82,6 +82,10 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        # Проверка попаданий в пришельцев.
+        # При обнаружении попадания удалить снаряд и пришельца.
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
     def _update_aliens(self):
         """
         Обновляет позиции всех пришельцев во флоте.
@@ -124,7 +128,7 @@ class AlienInvasion:
 
         # Определяем количество рядов, которые помещаются на экране
         ship_height = self.ship.rect.height
-        available_space_y = (self.settings.screen_height - (3 * alien_height) - ship_height)
+        available_space_y = (self.settings.screen_height - (5 * alien_height) - ship_height)
         number_rows = available_space_y // (2 * alien_height)
 
         # Создание флота вторжения
