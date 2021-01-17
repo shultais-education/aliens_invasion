@@ -113,6 +113,9 @@ class AlienInvasion:
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
 
+        # Проверка достиг ли флот нижнего края экрана
+        self._check_aliens_bottom()
+
     def _update_screen(self):
         """
         Обновляет изображения на экране и отображает новый экран.
@@ -173,6 +176,16 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             if alien.check_edges():
                 self._change_fleet_direction()
+                break
+
+    def _check_aliens_bottom(self):
+        """
+        Проверяет, добрались ли пришельцы до нижнего края экрана.
+        """
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                self._ship_hit()
                 break
 
     def _change_fleet_direction(self):
