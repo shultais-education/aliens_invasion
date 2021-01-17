@@ -35,6 +35,8 @@ class Settings:
         # Направление флота: 1 вправо, -1 влево.
         self.fleet_direction = 1
 
+        self.alien_points = 50
+
     def inc_speed(self):
         """
         Увеличение скорости игры.
