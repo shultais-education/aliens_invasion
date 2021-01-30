@@ -9,6 +9,7 @@ from bullet import Bullet
 from alien import Alien
 from button import Button
 from scoreboard import Scoreboard
+from bang import Bang
 
 
 class AlienInvasion:
@@ -32,6 +33,7 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+        self.bangs = pygame.sprite.Group()
 
         self._create_fleet()
 
@@ -113,6 +115,12 @@ class AlienInvasion:
         if collisions:
             for aliens in collisions.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
+
+                for alien in aliens:
+                    bang = Bang(self, alien.rect.centerx, alien.rect.centery)
+                    self.bangs.add(bang)
+                    self._update_bangs()
+
             self.sb.prep_score()
             self.sb.check_high_score()
 
@@ -142,6 +150,13 @@ class AlienInvasion:
         # Проверка достиг ли флот нижнего края экрана
         self._check_aliens_bottom()
 
+    def _update_bangs(self):
+        """
+        Обновляет взрывы.
+        """
+        # self.bangs.update()
+        # self.bangs.draw(self.screen)
+
     def _update_screen(self):
         """
         Обновляет изображения на экране и отображает новый экран.
@@ -152,6 +167,7 @@ class AlienInvasion:
             bullet.draw_bullet()
 
         self.aliens.draw(self.screen)
+        self.bangs.draw(self.screen)
         self.sb.show_score()
 
         # Показываем кнопку Play, если игра неактивна.
