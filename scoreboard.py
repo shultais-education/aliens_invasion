@@ -38,13 +38,13 @@ class Scoreboard:
         self.high_score_rect.top = self.screen_rect.top
 
     def prep_level(self):
-        level_str = "{:,}".format(self.stats.level).replace(",", " ")
+        level_str = str(self.stats.level)
         self.level_image = self.font.render(level_str, True, self.text_color, self.settings.bg_color)
 
         # Вывод уровня под текущим счетом.
         self.level_rect = self.score_image.get_rect()
-        self.level_rect.right = self.screen_rect.right - 20
-        self.level_rect.top = self.screen_rect.bottom + 10
+        self.level_rect.right = self.score_rect.right
+        self.level_rect.top = self.score_rect.bottom + 10
 
     def show_score(self):
         self.screen.blit(self.score_image, self.score_rect)

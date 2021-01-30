@@ -269,6 +269,11 @@ class AlienInvasion:
         # Скрываем указатель мыши
         pygame.mouse.set_visible(False)
 
+        # Выводим уровень
+        self.sb.prep_level()
+        self.sb.prep_score()
+        self.sb.prep_high_score()
+
     def _check_play_button(self, mouse_pos):
         """
         Запускает новую игру при нажатии на кнопку Play.
