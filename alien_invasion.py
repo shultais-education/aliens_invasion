@@ -234,6 +234,7 @@ class AlienInvasion:
         """
         if self.stats.ships_left > 0:
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
 
             # Очистка пришельцев и снарядов
             self.aliens.empty()
@@ -273,6 +274,7 @@ class AlienInvasion:
         self.sb.prep_level()
         self.sb.prep_score()
         self.sb.prep_high_score()
+        self.sb.prep_ships()
 
     def _check_play_button(self, mouse_pos):
         """
