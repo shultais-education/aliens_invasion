@@ -17,7 +17,7 @@ class Bang(Sprite):
         self.settings = ai_game.settings
 
         # Загрузка изображения взрыва.
-        self.image = pygame.image.load('images/ufo-1.png')
+        self.image = pygame.image.load('images/bang.png')
         self.rect = self.image.get_rect()
 
         # Каждый взрыв появляется на месте пришельца.
