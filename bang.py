@@ -25,7 +25,11 @@ class Bang(Sprite):
         self.rect.centery = centery
 
         # Засекаем время создания взрыва.
-        self.time = pygame.time.get_ticks()
+        self.start_time = pygame.time.get_ticks()
+
+        # Сохранение точной горизонтальной позиции пришельца.
+        self.x = float(self.rect.x)
 
     def update(self):
-        ...
+        self.x += (self.settings.alien_speed * self.settings.fleet_direction)
+        self.rect.x = self.x

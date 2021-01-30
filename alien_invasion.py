@@ -52,6 +52,8 @@ class AlienInvasion:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
+                self._check_bangs()
+                self._update_bangs()
 
             self._update_screen()
 
@@ -117,9 +119,7 @@ class AlienInvasion:
                 self.stats.score += self.settings.alien_points * len(aliens)
 
                 for alien in aliens:
-                    bang = Bang(self, alien.rect.centerx, alien.rect.centery)
-                    self.bangs.add(bang)
-                    self._update_bangs()
+                    self._create_bang(alien)
 
             self.sb.prep_score()
             self.sb.check_high_score()
@@ -152,10 +152,19 @@ class AlienInvasion:
 
     def _update_bangs(self):
         """
-        Обновляет взрывы.
+        Обновляет позиции взрывов с учетом движения флота.
         """
-        # self.bangs.update()
-        # self.bangs.draw(self.screen)
+        self.bangs.update()
+
+    def _check_bangs(self):
+        """
+        Проверяет взрывы.
+        """
+        current_time = pygame.time.get_ticks()
+
+        for bang in self.bangs:
+            if current_time - bang.start_time > 300:
+                self.bangs.remove(bang)
 
     def _update_screen(self):
         """
@@ -216,6 +225,15 @@ class AlienInvasion:
         alien.rect.x = alien.x
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
+
+    def _create_bang(self, alien):
+        """
+        Создает взрыв на месте пришельца.
+        """
+        bang = Bang(self, alien.rect.centerx, alien.rect.centery)
+        self.bangs.add(bang)
+
+        # TODO: нужен звук
 
     def _check_fleet_edges(self):
         """
