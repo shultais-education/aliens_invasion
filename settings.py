@@ -8,6 +8,7 @@ class Settings:
         self.screen_width = 1920
         self.screen_height = 928
         self.bg_color = (230, 230, 230)
+        self.bg_speed = 0.3
         self.speedup_scale = 1.1
         self.score_scale = 1.5
 

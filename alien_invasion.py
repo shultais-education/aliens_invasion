@@ -21,8 +21,14 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
 
-        # self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+        # Управление фоном
+        self.background = pygame.image.load('images/space-long.jpg')
+        self.background_rect = self.background.get_rect()
+        self.background_y = -self.background_rect.height // 2
+        self.screen.blit(self.background, (0, int(self.background_y)))
+
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Инопланетное вторжение")
@@ -50,6 +56,7 @@ class AlienInvasion:
 
             if self.stats.game_active:
                 self.ship.update()
+                self._update_background()
                 self._update_bullets()
                 self._update_aliens()
                 self._check_bangs()
@@ -170,7 +177,7 @@ class AlienInvasion:
         """
         Обновляет изображения на экране и отображает новый экран.
         """
-        self.screen.fill(self.settings.bg_color)
+
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
@@ -185,6 +192,17 @@ class AlienInvasion:
 
         # Отображение последнего прорисованного экрана.
         pygame.display.flip()
+
+    def _update_background(self):
+        """
+        Обновляет космическое небо.
+        """
+
+        self.background_y += self.settings.bg_speed
+        if self.background_y > 0:
+            self.background_y = -self.background_rect.height // 2
+
+        self.screen.blit(self.background, (0, int(self.background_y)))
 
     def _fire_bullet(self):
         """
