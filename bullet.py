@@ -16,6 +16,11 @@ class Bullet(Sprite):
         self.settings = ai_game.settings
         self.color = self.settings.bullet_color
 
+        # Звук выстрела
+        self.bang_sound = pygame.mixer.Sound('sounds/bullet.mp3')
+        self.bang_sound.play()
+        self.bang_sound.set_volume(0.3)
+
         # Создание снаряда в позиции (0, 0) и назначение правильной позиции.
         self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
         self.rect.midtop = ai_game.ship.rect.midtop

@@ -16,6 +16,10 @@ class Bang(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
+        # Звук взрыва
+        self.bang_sound = pygame.mixer.Sound('sounds/bang.mp3')
+        self.bang_sound.play()
+
         # Загрузка изображения взрыва.
         self.image = pygame.image.load('images/bang.png')
         self.rect = self.image.get_rect()

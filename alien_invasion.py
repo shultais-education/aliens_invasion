@@ -23,6 +23,9 @@ class AlienInvasion:
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
+        # Звук
+        self.bg_sound = pygame.mixer.Sound('sounds/bg.mp3')
+
         # Управление фоном
         self.background = pygame.image.load('images/space-long.jpg')
         self.background_rect = self.background.get_rect()
@@ -327,6 +330,9 @@ class AlienInvasion:
         self.sb.prep_score()
         self.sb.prep_high_score()
         self.sb.prep_ships()
+
+        self.bg_sound.play()
+        self.bg_sound.set_volume(0.6)
 
     def _check_play_button(self, mouse_pos):
         """
